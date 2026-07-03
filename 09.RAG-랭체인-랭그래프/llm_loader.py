@@ -28,4 +28,3 @@ def init_custom_llm(temperature: float= 0.1, max_tokens:int = 1000):
         temperature=temperature,
         max_tokens=max_tokens
     )
-
