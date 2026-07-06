@@ -61,3 +61,8 @@ llm = init_custom_llm()
 respose = llm.invoke(messages)
 
 print(respose.content)
+
+# invoke 뒤에 사용이 가능한 객체들은 f - string을 사용하거나 prompttemplate을 사용해서 
+# result = prompt.invoke({"topic" : "머신러닝"})와 같이 사용하거나
+# Chatprompttemplate을 사용해서 result = messages.invoke({"topic","딕셔너리"}) 와 같은 방식으로 사용함 
+# 물론 respose = llm.invoke(messages)와 같이 변수에 대입시킨 후 집어 넣을 수도 있음 
