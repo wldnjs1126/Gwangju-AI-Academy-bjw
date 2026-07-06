@@ -110,58 +110,27 @@ from openai import OpenAI
 
 # print(respose.content)
 
-# # API용 Strict Output (실전 필수)
-# prompt = """
-# 당신은 API 응답 생성기입니다.
-
-# [RULES]
-# - JSON만 출력
-# - 설명 금지
-# - key는 snake_case 사용
-# - 배열은 반드시 list로 출력
-
-# [OUTPUT FORMAT]
-# {
-#   "user_name": "",
-#   "user_age": 0,
-#   "user_skills": []
-# }
-
-# [INPUT]
-# 이름: 김철수
-# 나이: 25
-# 기술: Python, AI, ML
-# """
-
-# import sys
-# from pathlib import Path
-# import os
-
-# sys.path.append(str(Path(__file__).resolve().parent.parent))
-# from llm_loader import init_custom_llm
-
-# llm = init_custom_llm()
-# respose = llm.invoke(prompt)
-
-# print(respose.content)
-
+# API용 Strict Output (실전 필수)
 prompt = """
-당신은 AI 분석 에이전트입니다.
+당신은 API 응답 생성기입니다.
 
-[작업]
-사용자의 데이터를 분석하고 결론을 도출하세요.
+[RULES]
+- JSON만 출력
+- 설명 금지
+- key는 snake_case 사용
+- 배열은 반드시 list로 출력
 
-[절차]
-1. 문제 이해 (Reason)
-2. 해결 방법 선택 (Act)
-3. 결과 생성 (Output)
-4. 결과 검토 (Reflection)
-5. 개선 여부 판단
+[OUTPUT FORMAT]
+{
+  "user_name": "",
+  "user_age": 0,
+  "user_skills": []
+}
 
-[출력]
-- 분석 과정
-- 최종 결과
-- 검토 결과
+[INPUT]
+이름: 김철수
+나이: 25
+기술: Python, AI, ML
 """
 
 import sys
@@ -175,3 +144,34 @@ llm = init_custom_llm()
 respose = llm.invoke(prompt)
 
 print(respose.content)
+
+# prompt = """
+# 당신은 AI 분석 에이전트입니다.
+
+# [작업]
+# 사용자의 데이터를 분석하고 결론을 도출하세요.
+
+# [절차]
+# 1. 문제 이해 (Reason)
+# 2. 해결 방법 선택 (Act)
+# 3. 결과 생성 (Output)
+# 4. 결과 검토 (Reflection)
+# 5. 개선 여부 판단
+
+# [출력]
+# - 분석 과정
+# - 최종 결과
+# - 검토 결과
+# """
+
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
+# from llm_loader import init_custom_llm
+
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)

@@ -44,7 +44,7 @@ prompt = PromptTemplate.from_template("""
 result = prompt.invoke({"topic" : "머신러닝"})
 # result = prompt.format(topic="반복문") <= 둘 다 사용 가능하지만 주로 invoke 사용
 
-print(type(result))
+# print(type(result))
 print(result)
 
 messages = ChatPromptTemplate.from_messages([
