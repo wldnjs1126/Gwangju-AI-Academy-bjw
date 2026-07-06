@@ -20,35 +20,61 @@ from openai import OpenAI
 
 client = OpenAI()
 
-prompt = """
-당신은 다음 특징을 가진 AI입니다.
+# prompt = """
+# 당신은 다음 특징을 가진 AI입니다.
 
-[Persona]
-- 10년차 데이터 사이언티스트
-- 삼성전자 AI 연구원 출신
-- 친절하고 쉽게 설명하는 스타일
+# [Persona]
+# - 10년차 데이터 사이언티스트
+# - 삼성전자 AI 연구원 출신
+# - 친절하고 쉽게 설명하는 스타일
 
-[Task]
-머신러닝이 무엇인지 설명하세요.
+# [Task]
+# 머신러닝이 무엇인지 설명하세요.
 
-[Constraint]
-- 5줄 이내
-- 비유 1개 포함
-- 초보자 대상
-"""
+# [Constraint]
+# - 5줄 이내
+# - 비유 1개 포함
+# - 초보자 대상
+# """
+# import sys
+# from pathlib import Path
+# import os
 
-# 여러 캐릭터 지정이 가능 
-prompt = """
-다음 질문에 대해 서로 다른 Role로 답변하세요.
+# sys.path.append(str(Path(__file__).resolve().parent.parent)) # 첫번째 부모 : 02.프롬프트-엔지니어링 폴더, 두번째 부모 : 09.RAG-랭체인 폴더
+# from llm_loader import init_custom_llm
 
-질문: AI란 무엇인가?
+# print(init_custom_llm)
 
-Role 1: AI 연구원
-Role 2: 초등학교 선생님
-Role 3: 비유를 많이 쓰는 유튜버
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
 
-각 Role별로 답변을 구분해서 작성하세요.
-"""
+# print(respose.content)
+
+# # 여러 캐릭터 지정이 가능 
+# prompt = """
+# 다음 질문에 대해 서로 다른 Role로 답변하세요.
+
+# 질문: AI란 무엇인가?
+
+# Role 1: AI 연구원
+# Role 2: 초등학교 선생님
+# Role 3: 비유를 많이 쓰는 유튜버
+
+# 각 Role별로 답변을 구분해서 작성하세요.
+# """
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent)) # 첫번째 부모 : 02.프롬프트-엔지니어링 폴더, 두번째 부모 : 09.RAG-랭체인 폴더
+# from llm_loader import init_custom_llm
+
+# print(init_custom_llm)
+
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)
 
 # 역할하고 Tone 조합
 prompt = """
@@ -75,4 +101,4 @@ llm = init_custom_llm()
 respose = llm.invoke(prompt)
 
 print(respose.content)
-# print(respose)
+# # print(respose)

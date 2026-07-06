@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 import os
 
-sys.path.append(str(Path(__file__).resolve().parent.parent)) # 첫번째 부모 : 02.프롬프트-엔지니어링 폴더, 두번째 부모 : 09.RAG-랭체인 폴더
+sys.path.append(str(Path(__file__).resolve().parent.parent)) 
 from llm_loader import init_custom_llm
 
 print(init_custom_llm)

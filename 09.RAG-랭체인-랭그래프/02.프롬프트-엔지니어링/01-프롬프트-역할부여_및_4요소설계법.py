@@ -38,24 +38,38 @@
 
 # print(response.output_text)
 
-#2. Task / Constraint / Output 구조
-prompt = """
-[ROLE]
-당신은 데이터 분석 전문가입니다.
+# #2. Task / Constraint / Output 구조
+# prompt = """
+# [ROLE]
+# 당신은 데이터 분석 전문가입니다.
 
-[TASK]
-타이타닉 데이터를 분석해서 생존률을 설명하세요.
+# [TASK]
+# 타이타닉 데이터를 분석해서 생존률을 설명하세요.
 
-[CONSTRAINT]
-- 10줄 이내
-- 전문용어 최소화
-- 숫자 기반 설명 포함
-- 초보자 대상
+# [CONSTRAINT]
+# - 10줄 이내
+# - 전문용어 최소화
+# - 숫자 기반 설명 포함
+# - 초보자 대상
 
-[OUTPUT]
-- Markdown 표 형식
-- 마지막에 한 줄 요약 포함
-"""
+# [OUTPUT]
+# - Markdown 표 형식
+# - 마지막에 한 줄 요약 포함
+# """
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent)) # 첫번째 부모 : 02.프롬프트-엔지니어링 폴더, 두번째 부모 : 09.RAG-랭체인 폴더
+# from llm_loader import init_custom_llm
+
+# print(init_custom_llm)
+
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)
+# print(respose)
 
 # prompt 4요소 설계법 (실전 템플릿)
 prompt = """
@@ -94,4 +108,4 @@ llm = init_custom_llm()
 respose = llm.invoke(prompt)
 
 print(respose.content)
-print(respose)
+# print(respose)
