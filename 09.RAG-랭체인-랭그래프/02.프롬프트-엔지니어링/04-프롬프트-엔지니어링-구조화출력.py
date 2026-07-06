@@ -1,34 +1,84 @@
-# 프롬프트 = AI에게 무엇을 어떻게 해달라고 지시하는 입력
-
-# 프롬프트(Pronpt)는 생성형  AI가 원하는 결과를 만들어낼 수 있도록
-# 역할(role), 목적(Task), 맥락(Context), 제약 조건(Constraints), 출력 형식(Output Format) 등을 전달하는 자연어 기반의 지시서(Instruction)
-# AI가 문제를 이해하고, 추론하며, 원하는 형태의 결과를 생성하도록 안내하는 설계도
-
-
-# 페르소나 => (인물설정)
-# AI의 성격 + 경력 + 말투를 지정
-
-
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 from openai import OpenAI
 
-# 제로샷 :  예시가 없음 => 모델이 바로 답변 (AI가 기준없이 바로 답변 생성)
+# 1. Json 출력 강제하기
+# 일반 출력
+# 결과가 자유로운 텍스트로 나옴 (파싱 불가능)
 
 # prompt = """
-# 다음 문장을 영어로 번역하세요.
+# 사용자 정보를 만들어줘.
 
-# 나는 오늘 학교에 갔다.
+# 이름 : 김철수
+# 나이 : 25
+# 직업 : 개발자
 # """
+
 # import sys
 # from pathlib import Path
 # import os
 
-# sys.path.append(str(Path(__file__).resolve().parent.parent)) 
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
 # from llm_loader import init_custom_llm
 
-# print(init_custom_llm)
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)
+
+# JSON 구조화 출력
+# prompt = """
+# 다음 정보를 JSON 형식으로 출력하세요.
+
+# 조건:
+# - 반드시 JSON만 출력
+# - 설명 금지
+# - key는 영어로 작성
+
+# 정보:
+# 이름: 김철수
+# 나이: 25
+# 직업: 개
+# """
+
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
+# from llm_loader import init_custom_llm
+
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)
+
+# # 실무형 Json(강력추천)
+# prompt = """
+# 당신은 데이터 포맷터입니다.
+
+# 다음 정보를 JSON으로 변환하세요.
+
+# [CONSTRAINT]
+# - 반드시 JSON만 출력
+# - 코드블록 사용 금지
+# - 추가 설명 금지
+# - null 금지
+
+# [DATA]
+# 이름: 김철수
+# 나이: 25
+# 직업: 개발자
+# 경력: 3년
+# """
+
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
+# from llm_loader import init_custom_llm
 
 # llm = init_custom_llm()
 # respose = llm.invoke(prompt)
@@ -36,81 +86,90 @@ from openai import OpenAI
 # print(respose.content)
 
 
-# Few-shot
-# 예제 제공 => 패턴 학습 => 새 입력 예측
-
+# # Table 출력 (보고서용)
 # prompt = """
-# Q: 고양이
-# A: 동물
+# 다음 데이터를 표 형식으로 정리하세요.
 
-# Q: 자동차
-# A: 탈것
+# [DATA]
+# Python, 중급, 3년
+# Java, 초급, 1년
+# C++, 고급, 5년
 
-# Q: 사과
-# A:
+# [OUTPUT]
+# Markdown table 형식으로 출력
 # """
-
-# # Chain of thought 적용
-# prompt=""""
-# 다음 문제를 단계별로 생각해서 풀어라
-
-# 문제 : 철수는 사과를 5개를 가지고 있다.
-# 3개를 먹었다. 몇 개 남았는가?
-
-# 풀이과정 :
-# 1. 전체 개수 확인
-# 2. 소비한 개수 확인
-# 3. 계산 과정 설명
-# 4. 최종 답변
-# """
-
 # import sys
 # from pathlib import Path
 # import os
 
-# sys.path.append(str(Path(__file__).resolve().parent.parent)) 
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
 # from llm_loader import init_custom_llm
-
-# print(init_custom_llm)
 
 # llm = init_custom_llm()
 # respose = llm.invoke(prompt)
 
 # print(respose.content)
 
-# Few-shot + CoT 혼합 (실전)
-# 실무에서 가장 많이 쓰는 형태
+# # API용 Strict Output (실전 필수)
+# prompt = """
+# 당신은 API 응답 생성기입니다.
+
+# [RULES]
+# - JSON만 출력
+# - 설명 금지
+# - key는 snake_case 사용
+# - 배열은 반드시 list로 출력
+
+# [OUTPUT FORMAT]
+# {
+#   "user_name": "",
+#   "user_age": 0,
+#   "user_skills": []
+# }
+
+# [INPUT]
+# 이름: 김철수
+# 나이: 25
+# 기술: Python, AI, ML
+# """
+
+# import sys
+# from pathlib import Path
+# import os
+
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
+# from llm_loader import init_custom_llm
+
+# llm = init_custom_llm()
+# respose = llm.invoke(prompt)
+
+# print(respose.content)
+
 prompt = """
-[EXAMPLES]
+당신은 AI 분석 에이전트입니다.
 
-예시 1:
-문제: 2 + 2
-풀이: 2 + 2 = 4
-답: 4
+[작업]
+사용자의 데이터를 분석하고 결론을 도출하세요.
 
-예시 2:
-문제: 5 + 3
-풀이: 5 + 3 = 8
-답: 8
+[절차]
+1. 문제 이해 (Reason)
+2. 해결 방법 선택 (Act)
+3. 결과 생성 (Output)
+4. 결과 검토 (Reflection)
+5. 개선 여부 판단
 
-[TASK]
-문제: 7 + 6
-
-[INSTRUCTION]
-1. 단계별로 계산
-2. 마지막에 답 출력
+[출력]
+- 분석 과정
+- 최종 결과
+- 검토 결과
 """
-
-# AI는 답을 주는 존재가 아니라, 생각 과정을 설계해야 제대로 작동
 
 import sys
 from pathlib import Path
 import os
 
-sys.path.append(str(Path(__file__).resolve().parent.parent)) 
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 from llm_loader import init_custom_llm
-
-print(init_custom_llm)
 
 llm = init_custom_llm()
 respose = llm.invoke(prompt)
