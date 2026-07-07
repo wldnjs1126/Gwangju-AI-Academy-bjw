@@ -55,34 +55,13 @@ print(result)  # output_parser을 붙히지 않았으면 뒤에 .content를 붙�
 # print(result.content)
 
 
-# prompt = ChatPromptTemplate.from_template(
-# """
+# prompt = ChatPromptTemplate.from_template("""
 # 아래 XML 형식으로만 답하세요.
-
-# <AI_Future>
-#     <Trends>
-#         <Trend></Trend>
-#         <Trend></Trend>
-#         <Trend></Trend>
-#         <Trend></Trend>
-#     </Trends>
-#     <Challenges>
-#         <Challenge></Challenge>
-#         <Challenge></Challenge>
-#         <Challenge></Challenge>
-#     </Challenges>
-#     <Opportunities>
-#         <Opportunity></Opportunity>
-#         <Opportunity></Opportunity>
-#         <Opportunity></Opportunity>
-#     </Opportunities>
-# </AI_Future>
 
 
 # 질문:
 # {topic}
-# """
-# )
+# """)
 
 # output_parser = XMLOutputParser()
 
