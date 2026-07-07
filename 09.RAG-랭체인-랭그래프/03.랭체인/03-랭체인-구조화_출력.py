@@ -33,12 +33,3 @@ print("직업 :",result.job)
 
 print(result.model_dump())
 # {'name': '김철수', 'age': 25, 'job': '개발자'} 와 같이 Json 형식으로 출력# 첫번째 질문
-
-response = llm.invoke("안녕하세요, 제이름은 홍길동 입니다.")
-print("응답1", response.content)
-# 응답 안녕하세요, 홍길동님! 만나서 반갑습니다. 어떻게 도와드릴까요?
-
-# 두번째 질문
-response = llm.invoke("제 이름은 뭐였죠")
-print("응답2", response.content)
-# 답2 죄송하지만, 당신의 이름을 알 수 있는 정보가 없습니다. 당신의 이름을 알려주시면 그에 맞춰 대화할 수 있습니다!
