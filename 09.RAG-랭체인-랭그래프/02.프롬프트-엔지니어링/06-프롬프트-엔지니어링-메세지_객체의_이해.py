@@ -28,6 +28,13 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, Tool
 
 # 한 줄의 대화 = message 객체 하나로 관리
 # 결론) 전체 대화 = Message List
+ 
+# | 메시지           | 역할          |
+# | ------------- | -------------  |
+# | SystemMessage | AI의 역할 지정   |
+# | HumanMessage  | 사용자의 질문    |
+# | AIMessage     | AI의 이전 답변   |
+# | ToolMessage   | Tool 실행 결과   |
 
 # 1. 시스템 메세지 만들기
 system = SystemMessage(content="당신은 친절한 분석가입니다.")

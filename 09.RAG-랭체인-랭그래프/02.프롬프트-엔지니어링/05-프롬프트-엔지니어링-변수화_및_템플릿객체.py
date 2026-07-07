@@ -58,6 +58,11 @@ result = messages.invoke({"topic","딕셔너리"})
 llm = init_custom_llm()
 respose = llm.invoke(result)
 
+# llm.invoke를 하면 응답을 받게 되늗데 ( )안에 들어가는 것
+# 1. 기본적인 text
+# 2. prompt 객체
+# 3. 메세지 객체
+
 print(respose.content)
 
 # promptTemplate는 "문장 생성기", Chatprompttemplate는 "대화 구조 생성기"
