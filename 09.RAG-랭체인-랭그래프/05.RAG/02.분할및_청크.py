@@ -88,7 +88,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 #  ↓
 # 글자
 
-# 줄 단위로 먼저 잘르면 overlap이 안됨
+# 줄 단위로 먼저 자르면 overlap이 안됨
 # 줄 자체가 하나의 Chunk가 되어 overlap을 넣을 필요가 없어짐
 # 줄 단위 자체가 하나의 문맥 의미가 완성된 내용으로 이해 하기 때문.
 # 의미를 최대한 유지하면서 문서를 나누려고 함
