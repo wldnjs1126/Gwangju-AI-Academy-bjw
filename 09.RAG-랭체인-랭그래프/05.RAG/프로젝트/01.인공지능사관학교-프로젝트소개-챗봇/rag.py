@@ -65,20 +65,41 @@ def format_docs(docs):
     return result
 # 문서와 문서 사이를 명확하게 구분하기 위해서, LLM도 문서가 구분되어 있다는 것을 더 명확하게 인식하기 위해서 
 
-question = input("질문 : ")
 
-# 1. 관련 문서 검색
-docs = retriever.invoke(question)
-# print(docs)
+def ask(question):
+    
+    # 1. 관련 문서 검색
+    docs = retriever.invoke(question)
+    
+    # 2. 문자열로 변환
+    context = format_docs(docs)
+    
+    #3. Chain 실행
+    answer = chain.invoke(
+        {
+        "context":context,
+        "question": question
+        }
+    )
 
-# 2. 문자열로 변환
-context = format_docs(docs)
+    return answer
 
-# 3. Chain 실행
-ansewr = chain.invoke(
-    {
-        "context" : context,
-        "question" : question
-    }
-)
-print(ansewr)
+
+# question = input("질문:")
+
+# # 1. 관련 문서 검색
+# docs = retriever.invoke(question)
+# #print(docs)
+
+# # 2. 문자열로 변환
+# context = format_docs(docs)
+# print(context)
+
+# #3. Chain 실행
+# answer = chain.invoke(
+#     {
+#        "context":context,
+#        "question": question
+#     }
+# )
+# print(answer)
