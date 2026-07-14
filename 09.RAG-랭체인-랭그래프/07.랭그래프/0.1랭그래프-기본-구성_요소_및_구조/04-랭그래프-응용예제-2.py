@@ -39,6 +39,16 @@ result = graph.invoke({
 print(result)
 print(result["price"])
 
+
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+
+from util import show_graph
+show_graph(graph)
+
+
 # START
 #   ↓
 # discount
