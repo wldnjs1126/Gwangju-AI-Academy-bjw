@@ -5,23 +5,39 @@ from langgraph.graph import StateGraph, START, END
 class State(TypedDict):
     price:int
 
-# 2. node 함수
 
+# 2. node 함수
 def discount(state:State):
     state["price"] = int(state["price"] * 0.9)
     return state
 
 def delivery(state:State):
-    state["price"] = state["price"] + 5000
+    # state["price"] = state["price"] + 5000
     return{
         "price" : state["price"] + 5000
     }
+
 
 # 3. 그래프 생성
 builder = StateGraph(State)
 
 builder.add_node("discount",discount)
 builder.add_node("delivery",delivery)
+
+builder.add_edge(START,"discount")
+builder.add_edge("discount","delivery")
+builder.add_edge("delivery",END)
+
+# 4. 컴파일
+graph = builder.compile()
+
+# 5. 실행
+result = graph.invoke({
+    "price" : 100000
+})
+
+print(result)
+print(result["price"])
 
 # START
 #   ↓
