@@ -12,12 +12,17 @@ from llm_loader import init_custom_llm
 
 llm = init_custom_llm()
 
-from typing import TypedDict
+from typing import TypedDict,Annotated
 from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
 
 # 1.State 정의
 class State(TypedDict):
-    messages:list
+    messages:Annotated[list, add_messages]
+
+price:int=500
+
+print(500)
 
 # node 함수 만들기
 def chatbot(state):
@@ -29,9 +34,7 @@ def chatbot(state):
         
 
     return {
-        "messages":[
-            AIMessage(content = response.content)
-        ]
+       "messages":[response]
     }
 
 # graph
@@ -42,11 +45,23 @@ builder.add_node("chabot",chatbot)
 builder.add_edge(START,"chabot")
 builder.add_edge("chabot",END)
 
-graph = builder.compile()
+# 메모리 기억 시키기
+# messages = []
 
+from langgraph.checkpoint.memory import InMemorySaver
 
 # 메모리 기억 시키기
-messages = []
+memory = InMemorySaver()
+
+graph = builder.compile(
+    checkpointer = memory
+)
+
+config = {
+    "configurable":{
+        "thread_id" : "user1"
+    }
+}
 
 # 실행
 while True:
@@ -55,16 +70,27 @@ while True:
     
     if question == "exit":
         break
-    
-    messages.append(HumanMessage(content = question))
 
-    result = graph.invoke({
-        "messages": messages
-    })
+    result = graph.invoke(
+        {
+            "messages": [
+                HumanMessage(question)
+            ]
+        },
+        config = config
+    )
 
-    answer = result["messages"][0].content
+    answer = result["messages"][-1].content
     
     print("AI 답변", answer)
     
-    # 대화기억 추가
-    messages.append(AIMessage(content = answer))
+
+
+
+
+# import sys
+# from pathlib import Path
+# sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+# from util import show_graph
+# show_graph(graph)
