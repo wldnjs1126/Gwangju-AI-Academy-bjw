@@ -1,0 +1,35 @@
+remote: error: GH013: Repository rule violations found for refs/heads/main.        
+remote: 
+remote: - GITHUB PUSH PROTECTION        
+remote:   —————————————————————————————————————————        
+remote:     Resolve the following violations before pushing again        
+remote: 
+remote:     - Push cannot contain secrets        
+remote: 
+remote:             
+remote:      (?) Learn how to resolve a blocked push        
+remote:      https://docs.github.com/code-security/secret-scanning/working-with-secret-scanning-and-push-protection/working-with-push-protection-from-the-command-line#resolving-a-blocked-push        
+remote:             
+remote:             
+remote:       —— OpenAI API Key ————————————————————————————————————        
+remote:        locations:        
+remote:          - commit: f31d27ad1af03ec65521cbd32847e5805b5bf58d        
+remote:            path: 명예 전주인 맛집/.env:1        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/wldnjs1126/jeonju-restaurant-chatbot/security/secret-scanning/unblock-secret/3GWmgHCyxp6YZVuwhWYstJXVk6e        
+remote:             
+remote:             
+remote:       —— LangSmith Personal Access Token ———————————————————        
+remote:        locations:        
+remote:          - commit: f31d27ad1af03ec65521cbd32847e5805b5bf58d        
+remote:            path: 명예 전주인 맛집/.env:6        
+remote:             
+remote:        (?) To push, remove secret from commit(s) or follow this URL to allow the secret.        
+remote:        https://github.com/wldnjs1126/jeonju-restaurant-chatbot/security/secret-scanning/unblock-secret/3GWmgHPvmA8LZL6xb2moJ5Z0LXj        
+remote:             
+remote: 
+remote: 
+To https://github.com/wldnjs1126/jeonju-restaurant-chatbot.git
+ ! [remote rejected] main -> main (push declined due to repository rule violations)
+error: failed to push some refs to 'https://github.com/wldnjs1126/jeonju-restaurant-chatbot.git'
