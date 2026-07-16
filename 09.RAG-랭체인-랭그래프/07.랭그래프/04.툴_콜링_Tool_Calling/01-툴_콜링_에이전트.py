@@ -34,14 +34,14 @@ def age(birth_year):
     
     return current_year - birth_year
 
-result = age.invoke(
-    {
-        "birth_year":2000
-    }
-)
-print(result)
-print(age.name)
-print(age.description)
+# result = age.invoke(
+#     {
+#         "birth_year":2000
+#     }
+# )
+# print(result)
+# print(age.name)
+# print(age.description)
 
 from langchain.agents import create_agent
 
