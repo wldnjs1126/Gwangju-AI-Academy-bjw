@@ -21,9 +21,17 @@ def run_eda(df):
     result.append(df.info())
 
     result.append("========= DESCRIBE ======")
-    result.append(df.describe())
+    result.append(df.describe(include="all"))
 
     return str(result)
+
+
+# 코드 실행
+def excute_python(df, code):
+    dic_para = {"df":df, "pd":pd, "plt":plt}
+    exec(code,dic_para)
+
+    return dic_para.get("result","실행완료")
 
 
 

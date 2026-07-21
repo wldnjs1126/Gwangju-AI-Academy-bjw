@@ -148,10 +148,58 @@ def router(state):
 # EDA
 # ----------------------
 def eda_node(state):
-    
+
     state["result"] = run_eda(state["dataframe"])
     return state
 
+# ----------------------
+# GROUP
+# ----------------------
+def group_node(state):
+    
+    prompt = f"""
+    
+    DataFrame 이름은 df 입니다.
+
+    컬럼
+
+    {list(df.columns)}
+
+    질문
+
+    {state["question"]}
+
+    pandas 코드만 작성하세요.
+    반드시 result 변수에 저장하세요.
+
+    반드시 Python 코드만 출력하세요.
+    설명하지 마세요.
+    Markdown 코드 블록(```python)을 사용하지 마세요.
+
+    예)
+    result=df.groupby("상품")["매출"].sum()
+    """
+    
+    state["code"] = llm.invoke(prompt).content
+
+    return state
+
+# ----------------------
+# Execute
+# ----------------------
+def execute_node(state):
+    print("엑서큐드 코드",state["code"])
+
+    try:
+        state["result"] = execute_python(
+            state["dataframe"],
+            state["code"]
+        )
+    except Exception as e:
+        state["error"] = str(e)
+        state["result"] = "실패"
+
+    return state
 # ----------------------
 # Summary
 # ----------------------
@@ -170,8 +218,8 @@ def summary_node(state):
     """
 
     state["result"] = llm.invoke(prompt).content
-    return state
 
+    return state
 
 # ----------------------
 # Graph
@@ -181,6 +229,9 @@ builder = StateGraph(AnalysisState)
 builder.add_node("question",question_node)
 builder.add_node("planner",planner_node)
 builder.add_node("eda",eda_node)
+builder.add_node("group",group_node)
+
+builder.add_node("execute", execute_node)
 
 builder.add_node("summary",summary_node)
 
@@ -191,13 +242,17 @@ builder.add_conditional_edges(
     "planner",
     router,
     {
-        "EDA":"eda"
+        "EDA":"eda",
+        "GROUP":"group"
     }
 )
 builder.add_edge("eda","summary")
+builder.add_edge("group","execute")
+builder.add_edge("execute","summary")
 builder.add_edge("summary",END)
 
 graph = builder.compile()
+
 
 sys.path.append(
     str(Path(__file__).resolve().parent.parent.parent)
