@@ -10,6 +10,7 @@ def load_csv(path):
     return df
 
 # EDA
+import io
 def run_eda(df):
 
     result = []
@@ -18,7 +19,10 @@ def run_eda(df):
     result.append(df.head())
 
     result.append("========= INFO ======")
-    result.append(df.info())
+    
+    buffer = io.StringIO()
+    df.info(buf=buffer)
+    result.append(buffer.getvalue())
 
     result.append("========= DESCRIBE ======")
     result.append(df.describe(include="all"))
@@ -27,12 +31,11 @@ def run_eda(df):
 
 
 # 코드 실행
-def excute_python(df, code):
+def execute_python(df, code):
     dic_para = {"df":df, "pd":pd, "plt":plt}
     exec(code,dic_para)
 
     return dic_para.get("result","실행완료")
-
 
 
 # 날짜 타입 자동 탐색
