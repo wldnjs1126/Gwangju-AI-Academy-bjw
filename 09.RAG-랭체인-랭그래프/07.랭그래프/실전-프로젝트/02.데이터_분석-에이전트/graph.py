@@ -21,6 +21,14 @@ from llm_loader import init_custom_llm
 llm = init_custom_llm()
 
 # ----------------------
+# 그래프 한글 처리
+# ----------------------
+import matplotlib.pyplot as plt
+
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False
+
+# ----------------------
 # CSV
 # ----------------------
 BASE_DIR = Path(__file__).resolve().parent
@@ -200,6 +208,65 @@ def execute_node(state):
         state["result"] = "실패"
 
     return state
+
+# ----------------------
+# PLOT
+# ----------------------
+def plot_node(state):
+
+    prompt = f"""
+    
+    DataFrame 이름은 df 입니다.
+
+    컬럼
+
+    {list(df.columns)}
+
+    질문
+
+    {state["question"]}
+
+    matplotlib 코드 작성
+    plt.show() 포함
+
+    반드시 Python 코드만 출력하세요.
+    설명하지 마세요.
+    Markdown 코드 블록(```python)을 사용하지 마세요.
+    """
+
+    state["code"] = llm.invoke(prompt).content
+
+    return state
+
+# ----------------------
+# FILTER
+# ----------------------
+def filter_node(state):
+
+    prompt = f"""
+    
+    DataFrame 이름은 df 입니다.
+
+    컬럼
+
+    {list(df.columns)}
+
+    질문
+
+    {state["question"]}
+
+    result 변수에 저장하는 pandas 코드만 출력하세요.
+
+    반드시 Python 코드만 출력하세요.
+    설명하지 마세요.
+    Markdown 코드 블록(```python)을 사용하지 마세요.
+    """
+
+    state["code"] = llm.invoke(prompt).content
+
+    return state
+
+
 # ----------------------
 # Summary
 # ----------------------
@@ -231,6 +298,10 @@ builder.add_node("planner",planner_node)
 builder.add_node("eda",eda_node)
 builder.add_node("group",group_node)
 
+builder.add_node("plot",plot_node)
+builder.add_node("filter",filter_node)
+
+
 builder.add_node("execute", execute_node)
 
 builder.add_node("summary",summary_node)
@@ -243,11 +314,18 @@ builder.add_conditional_edges(
     router,
     {
         "EDA":"eda",
-        "GROUP":"group"
+        "GROUP":"group",
+        "PLOT":"plot",
+        "FILTER":"filter",
     }
 )
 builder.add_edge("eda","summary")
+
 builder.add_edge("group","execute")
+builder.add_edge("plot","execute")
+
+builder.add_edge("filter","execute")
+
 builder.add_edge("execute","summary")
 builder.add_edge("summary",END)
 
