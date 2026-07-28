@@ -13,3 +13,34 @@ st.download_button(
     file_name="text.txt"
 )
 
+file = st.file_uploader("파일 업로드")
+
+if file:
+    st.write("파일명",file.name)
+
+st.title("CSV 이미지 업로드")
+
+file = st.file_uploader(
+    "CSV 파일선택",
+    type=["CSV"]
+)
+
+import pandas as pd
+
+if file:
+    df = pd.read_csv(file)
+    st.dataframe(df)
+
+    st.write("텍스트")
+    st.write(df.describe())
+    st.write(df.head())
+
+st.title("이미지 업로드")
+
+file = st.file_uploader(
+    "이미지 선택",
+    type=["png","jpg","jpeg"]
+)
+
+if file:
+    st.image(file,caption="이미지 업로드")
